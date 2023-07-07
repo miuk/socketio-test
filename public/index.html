@@ -8,8 +8,12 @@
 <body>
   <div class="container">
     <form name="myform">
-      <input name="text" type="text">
-      <button name="btn">送信</button>
+      <button id="join">Join</button>
+      <button id="leave">Leave</button>
+      <input id="room" type="text">
+      <br>
+      <button id="chat">Chat</button>
+      <input id="msg" type="text">
     </form>
     <hr>
     <ul id="message"></ul>
@@ -19,10 +23,30 @@
 var socket = io();
 var message = document.getElementById('message');
 var form = document.forms.myform;
-form.btn.addEventListener('click', (e) => {
-  e.preventDefault();
-  socket.emit('chat', form.text.value);
-  form.text.value = '';
+document.getElementById('join').addEventListener('click', (e) => {
+    e.preventDefault();
+    var msg = {
+	room: document.getElementById('room').value,
+    };
+    console.log('join');
+    socket.emit('join', msg);
+});
+document.getElementById('leave').addEventListener('click', (e) => {
+    e.preventDefault();
+    var msg = {
+	room: document.getElementById('room').value,
+    };
+    console.log('leave');
+    socket.emit('leave', msg);
+});
+document.getElementById('chat').addEventListener('click', (e) => {
+    e.preventDefault();
+    var msg = {
+	room: document.getElementById('room').value,
+	msg: document.getElementById('msg').value,
+    };
+    console.log('chat');
+    socket.emit('chat', msg);
 });
 socket.on('chat', (msg) => {
   var li = document.createElement('li');
