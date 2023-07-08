@@ -10,7 +10,7 @@
     <form name="myform">
       <button id="join">Join</button>
       <button id="leave">Leave</button>
-      <input id="room" type="text">
+      Room: <input id="room" type="text" style="width:200px">
       <br>
       <button id="chat">Chat</button>
       <input id="msg" type="text">
@@ -47,6 +47,7 @@ document.getElementById('chat').addEventListener('click', (e) => {
     };
     console.log('chat');
     socket.emit('chat', msg);
+    document.getElementById('msg').value = '';
 });
 socket.on('chat', (msg) => {
   var li = document.createElement('li');
